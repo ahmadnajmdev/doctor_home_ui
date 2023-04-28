@@ -2,17 +2,37 @@
 import 'package:doctor_home_ui/utill/colors.dart';
 import 'package:flutter/material.dart';
 
-class DoctorCart extends StatelessWidget {
+class DoctorCart extends StatefulWidget {
   final String doctorSpeciality;
   final String doctorName;
   final String doctorImage;
-  String BookAppointment = "Book Appointment";
+
   DoctorCart({
     super.key,
     required this.doctorName,
     required this.doctorSpeciality,
     required this.doctorImage,
   });
+
+  @override
+  State<DoctorCart> createState() => _DoctorCartState(
+        doctorImage: doctorImage,
+        doctorName: doctorName,
+        doctorSpeciality: doctorSpeciality,
+      );
+}
+
+class _DoctorCartState extends State<DoctorCart> {
+  _DoctorCartState({
+    required this.doctorName,
+    required this.doctorSpeciality,
+    required this.doctorImage,
+  });
+  final String doctorSpeciality;
+  final String doctorName;
+  final String doctorImage;
+  String BookAppointment = "Book Appointment";
+  bool isBookMarkButtonPressed = false;
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +50,14 @@ class DoctorCart extends StatelessWidget {
                   color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(20),
                   image: DecorationImage(
-                    image: NetworkImage(doctorImage),
+                    image: NetworkImage(widget.doctorImage),
                     fit: BoxFit.contain,
                   ),
                 ),
               ),
               Positioned(
                 top: 100,
-                left: 30,
+                left: -10,
                 child: Container(
                   padding: EdgeInsets.all(12),
                   decoration: BoxDecoration(
@@ -51,7 +71,7 @@ class DoctorCart extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        doctorName,
+                        widget.doctorName,
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -60,7 +80,7 @@ class DoctorCart extends StatelessWidget {
                       SizedBox(
                         height: 10,
                       ),
-                      Text(doctorSpeciality,
+                      Text(widget.doctorSpeciality,
                           style: TextStyle(
                             fontSize: 12,
                           )),
@@ -69,15 +89,26 @@ class DoctorCart extends StatelessWidget {
                       ),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(20),
-                        child: Container(
-                          width: 150,
-                          height: 40,
-                          color: buttonClr,
-                          child: Center(
-                            child: Text(
-                              BookAppointment,
-                              style: TextStyle(
-                                color: greenClr,
+                        child: InkWell(
+                          onTap: () {
+                            print('Book Mark button pressed');
+                            setState(() {
+                              isBookMarkButtonPressed =
+                                  !isBookMarkButtonPressed;
+                            });
+                          },
+                          child: Container(
+                            width: 150,
+                            height: 40,
+                            color: isBookMarkButtonPressed
+                                ? Colors.grey[400]
+                                : buttonClr,
+                            child: Center(
+                              child: Text(
+                                BookAppointment,
+                                style: TextStyle(
+                                  color: greenClr,
+                                ),
                               ),
                             ),
                           ),

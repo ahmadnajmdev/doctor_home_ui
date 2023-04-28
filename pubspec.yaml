@@ -38,6 +38,7 @@ dependencies:
   floating_navbar: ^2.0.2
   bottom_sheet_bar: ^2.3.9
   sliding_up_panel: ^2.0.0+1
+  draggable_home: ^1.0.4
 
 dev_dependencies:
   flutter_test:
