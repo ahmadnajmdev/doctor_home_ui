@@ -19,6 +19,9 @@ Getting Started
 To get started with this project, follow these steps:
 
 Clone the repository to your local machine
+
 Open the project in your favorite IDE (such as Visual Studio Code)
+
 Run flutter packages get to install the necessary packages
+
 Run the app using flutter run or by pressing the "Run" button in your IDE
