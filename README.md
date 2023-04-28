@@ -5,20 +5,25 @@ You can also find the project on GitHub: https://github.com/bard/doctor_home_ui
 
 * List of doctors
 * Search bar
-* Calendar
-* Chat
-* Settings page
+* Bottom Nav Bar
+* Catagorieys
+
+
 
 ## Technologies
 
 * Flutter
 * Dart
-* Firebase
 
 ## Getting Started
 
 1. Clone the repository
-2. Run `flutter run`
+2. Get Packages `flutter pub get`
+3. Run `flutter run`
+
+## Screen Shot 
+![b031f69d81532045aea104c613954810](https://user-images.githubusercontent.com/86409804/235220707-2cdafeda-8a1e-4577-a76b-cfc4391537fe.png)
+
 
 ## Contributing
 
@@ -28,4 +33,4 @@ You can also find the project on GitHub: https://github.com/bard/doctor_home_ui
 
 ## License
 
-This project is licensed under the MIT License.
+This project is Open-Source
