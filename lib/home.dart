@@ -1,16 +1,8 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, prefer_interpolation_to_compose_strings
-
-import 'dart:convert';
-
 import 'package:doctor_home_ui/utill/card.dart';
 import 'package:doctor_home_ui/utill/catagoriey.dart';
-import 'package:floating_navbar/floating_navbar.dart';
-import 'package:floating_navbar/floating_navbar_item.dart';
 import 'package:flutter/material.dart';
 import 'utill/texts.dart';
-
-import 'package:doctor_home_ui/utill/texts.dart';
-
 import 'utill/colors.dart';
 
 class Home extends StatefulWidget {
