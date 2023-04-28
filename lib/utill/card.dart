@@ -57,7 +57,7 @@ class _DoctorCartState extends State<DoctorCart> {
               ),
               Positioned(
                 top: 100,
-                left: -10,
+                left: 30,
                 child: Container(
                   padding: EdgeInsets.all(12),
                   decoration: BoxDecoration(

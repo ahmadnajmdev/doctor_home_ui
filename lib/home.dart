@@ -3,6 +3,7 @@ import 'package:doctor_home_ui/utill/card.dart';
 import 'package:doctor_home_ui/utill/catagoriey.dart';
 import 'package:draggable_home/draggable_home.dart';
 import 'package:flutter/material.dart';
+import 'utill/doctors_list.dart';
 import 'utill/texts.dart';
 import 'utill/colors.dart';
 
@@ -273,6 +274,46 @@ class _HomeState extends State<Home> {
                           catagorieyName: 'Lungs',
                           catagorieyEmoji: '🫁',
                         ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 30),
+                  // DoctorList
+                  Text(
+                    'Doctor List',
+                    style: TextStyle(
+                      color: greenClr,
+                      fontSize: 20,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                  SizedBox(height: 20),
+
+                  // DOCTORLIST STARTS FROM HERE
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Column(
+                      children: [
+                        DoctorsList(
+                          doctorName: 'Dr , Sarah Williams',
+                          doctorSpeciality: 'Dentist',
+                          doctorImage:
+                              'https://customerthink.com/wp-content/uploads/Doctor-PNG-Images.png',
+                        ),
+                        SizedBox(height: 20),
+                        DoctorsList(
+                          doctorName: 'Dr , Sarah Williams',
+                          doctorSpeciality: 'Dentist',
+                          doctorImage:
+                              'https://customerthink.com/wp-content/uploads/Doctor-PNG-Images.png',
+                        ),
+                        SizedBox(height: 20),
+                        DoctorsList(
+                          doctorName: 'Dr , Sarah Williams',
+                          doctorSpeciality: 'Dentist',
+                          doctorImage:
+                              'https://customerthink.com/wp-content/uploads/Doctor-PNG-Images.png',
+                        )
                       ],
                     ),
                   ),
