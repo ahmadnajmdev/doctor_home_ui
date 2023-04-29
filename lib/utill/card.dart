@@ -101,7 +101,7 @@ class _DoctorCartState extends State<DoctorCart> {
                             width: 150,
                             height: 40,
                             color: isBookMarkButtonPressed
-                                ? 
+                                ? Colors.grey[400]
                                 : buttonClr,
                             child: Center(
                               child: Text(
