@@ -1,5 +1,7 @@
+import 'package:doctor_home_ui/pages/bottomnav.dart';
+
 import 'package:flutter/material.dart';
-import 'home.dart';
+import 'pages/home.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -14,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Doctor Home Ui',
-      home: Home(),
+      home: BottomNav(),
     );
   }
 }

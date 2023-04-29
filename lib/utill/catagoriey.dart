@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 class CatagorieyCard extends StatelessWidget {
@@ -12,8 +11,8 @@ class CatagorieyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(right: 20),
-      padding: EdgeInsets.all(12),
+      margin: const EdgeInsets.only(right: 20),
+      padding: const EdgeInsets.all(12),
       width: 100,
       height: 100,
       decoration: BoxDecoration(
@@ -26,15 +25,15 @@ class CatagorieyCard extends StatelessWidget {
       child: Column(
         children: [
           Text(catagorieyEmoji,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 30,
               )),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Text(
             catagorieyName,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
             ),
           ),
