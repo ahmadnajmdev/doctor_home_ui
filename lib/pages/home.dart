@@ -1,7 +1,9 @@
+import 'package:doctor_home_ui/pages/notification.dart';
 import 'package:doctor_home_ui/utill/card.dart';
 import 'package:doctor_home_ui/utill/catagoriey.dart';
 import 'package:draggable_home/draggable_home.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../utill/doctors_list.dart';
 import '../utill/texts.dart';
 import '../utill/colors.dart';
@@ -28,11 +30,10 @@ class _HomeState extends State<Home> {
       backgroundColor: greenClr,
       // BODY
       body: DraggableHome(
-        
         actions: [
           IconButton(
             onPressed: () {
-              print('go to notification screen');
+              Get.to(() => NotificationScreen());
             },
             icon: const Icon(
               Icons.notifications_none,
@@ -40,7 +41,6 @@ class _HomeState extends State<Home> {
             ),
           ),
         ],
-        
         appBarColor: greenClr,
         backgroundColor: Colors.white,
         headerWidget: Container(
@@ -104,7 +104,7 @@ class _HomeState extends State<Home> {
                           )),
                       child: IconButton(
                         onPressed: () {
-                          print('go to notification screen');
+                          Get.to(() => NotificationScreen());
                         },
                         icon: const Icon(
                           Icons.notifications_none,
