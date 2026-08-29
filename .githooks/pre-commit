@@ -1,0 +1,16 @@
+#!/bin/sh
+#
+# Pre-commit guard against injected obfuscated JS payloads.
+#
+# Unlike .git/hooks/, this hook is version-controlled and shared with every
+# clone via `git config core.hooksPath .githooks` (auto-configured by composer's
+# post-autoload-dump; run bin/install-git-hooks.sh to set it manually).
+#
+# Detection logic lives in bin/guard-payload.sh so the hook and CI agree.
+#
+root=$(git rev-parse --show-toplevel)
+staged=$(git diff --cached --name-only --diff-filter=AM)
+[ -n "$staged" ] || exit 0
+
+# shellcheck disable=SC2086
+exec "$root/bin/guard-payload.sh" $staged

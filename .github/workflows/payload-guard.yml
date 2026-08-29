@@ -1,0 +1,24 @@
+name: Payload Guard
+
+# Fails any push or PR whose tree contains an injected stager or an editor
+# auto-run trigger. Make this a REQUIRED status check (Settings -> Branches)
+# so an infected commit can never land, whichever editor produced it.
+#
+# Detection lives in bin/guard-payload.sh, shared with the local pre-commit
+# hook so the two can never disagree.
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    name: scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Scan for injected payloads and auto-run triggers
+        run: sh bin/guard-payload.sh
