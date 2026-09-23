@@ -23,6 +23,17 @@
 # v2 adds rules C-F below. Rule C is the important one: it keys on the delivery
 # trick itself (content pushed past a long run of leading spaces) rather than on
 # a filename or an extension, so a rename does not evade it.
+#
+# v3 (2026-09-23) after the third mass force-push. The campaign is PolinRider
+# (DPRK / Lazarus, Contagious Interview cluster); see apache/superset#39299.
+# That round slipped past two rules and was caught only by rule F:
+#
+#   fa-solid-500.woff2 ........ rule E knew 400, not 500  -> E generalised
+#   padded with TABs .......... rule C tested spaces only  -> C takes 0x09 too
+#
+# Relying on a single surviving rule is how the next variant gets through, so
+# v3 widens both, adds the published PolinRider signatures to rule A, and adds
+# rule G for the cover-tracks tooling that does the force-pushing.
 # ---------------------------------------------------------------------------
 set -eu
 
@@ -31,7 +42,9 @@ set -eu
 #   global.i="A8-...                  the 2026-08 wave, dot notation (v1 missed this)
 #   String.fromCharCode(127)          DEL-char scrambler construction
 #   var _$_xx=(function / )(LQI       the original scrambler
-SIG='String\.fromCharCode\(127\)|global\[[^]]*\] *= *(require|function)|global\[.[^]].\] *=|global\.[A-Za-z_$][A-Za-z0-9_$]* *= *"A8-|var _\$_[0-9a-f]{2,} *= *\(function|\)\(LQI'
+#   rmcej%otb% / Cot%3t=shtP          PolinRider string literals (both variants)
+#   function MDy( / _$_1e42           PolinRider decoder names (new / original)
+SIG='String\.fromCharCode\(127\)|global\[[^]]*\] *= *(require|function)|global\[.[^]].\] *=|global\.[A-Za-z_$][A-Za-z0-9_$]* *= *"A8-|var _\$_[0-9a-f]{2,} *= *\(function|\)\(LQI|rmcej%otb%|Cot%3t=shtP|function MDy *\(|_\$_1e42'
 
 is_source() {
     case "$1" in
@@ -54,24 +67,48 @@ for file in $files; do
     [ -f "$file" ] || continue
     case "$file" in node_modules/*|vendor/*|public/build/*|*/dist/*) continue ;; esac
 
-    # --- Rule C: content hidden behind a run of leading spaces -------------
-    # The disguised "font" was 31,303 bytes that began with hundreds of spaces.
+    # --- Rule C: content hidden behind a run of leading whitespace ---------
+    # The 2026-08 "font" began with hundreds of spaces; the 2026-09-23 one used
+    # TABs instead and walked straight past a space-only test. Accept any mix of
+    # 0x20 and 0x09 so the next padding byte choice does not need a new rule.
     # Compared as hex so binary files are handled safely (BSD tr mangles them).
     if [ -s "$file" ]; then
         head16=$(dd if="$file" bs=1 count=16 2>/dev/null | od -An -v -tx1 | tr -d ' \n')
-        if [ "$head16" = "20202020202020202020202020202020" ]; then
-            flag "$file — begins with 16+ space bytes (dropper hidden behind whitespace)"
+        if printf '%s' "$head16" | grep -Eq '^(20|09){16}$'; then
+            flag "$file — begins with 16+ whitespace bytes (dropper hidden behind padding)"
             continue
         fi
     fi
 
     # --- Rule E: fabricated FontAwesome filename --------------------------
-    # FontAwesome ships fa-solid-900, fa-regular-400 and fa-brands-400.
-    # There is no fa-solid-400 in any release; the name is attacker-invented.
-    case "$file" in
-        *fa-solid-400.woff2|*fa-solid-400.woff|*fa-solid-400.ttf)
-            flag "$file — fa-solid-400 is not a real FontAwesome file"
+    # FontAwesome ships exactly three face files: fa-solid-900, fa-regular-400
+    # and fa-brands-400. Any other weight is attacker-invented. Pinning the bad
+    # names (400) was the v2 mistake — fa-solid-500 walked past it — so v3 pins
+    # the three GOOD names and flags every other fa-* face instead.
+    base=${file##*/}
+    case "$base" in
+        fa-solid-900.*|fa-regular-400.*|fa-brands-400.*|fa-v4compatibility.*) : ;;
+        fa-solid-*|fa-regular-*|fa-brands-*)
+            flag "$file — $base is not a FontAwesome release filename"
             continue ;;
+    esac
+
+    # --- Rule G: cover-tracks / propagation tooling -----------------------
+    # PolinRider stage 4 rewrites the last commit keeping its original
+    # timestamp, skips the hooks and force-pushes — which is why the forged
+    # commits carry a committer date identical to the real one they replace.
+    # The 2026-09-19 round added these names to .gitignore to hide them.
+    case "$base" in
+        temp_auto_push.bat|temp_interactive_push.bat|branch_structure.json)
+            flag "$file — PolinRider propagation/cover-tracks tool"
+            continue ;;
+    esac
+    case "$file" in
+        *.bat)
+            if grep -q 'LAST_COMMIT_DATE' "$file" 2>/dev/null; then
+                flag "$file — .bat referencing LAST_COMMIT_DATE (commit-date forgery)"
+                continue
+            fi ;;
     esac
 
     # --- Rule F: font extension whose magic number disagrees --------------
